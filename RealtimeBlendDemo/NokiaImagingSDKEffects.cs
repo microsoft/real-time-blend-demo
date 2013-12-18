@@ -100,6 +100,8 @@ namespace RealtimeBlendDemo
                 }
                 catch (Exception ex)
                 {
+                    System.Diagnostics.Debug.WriteLine("RealtimeBlendDemo.GetNewFrameAndApplyEffect(): "
+                        + ex.ToString());
                 }
 
                 _semaphore.Release();
