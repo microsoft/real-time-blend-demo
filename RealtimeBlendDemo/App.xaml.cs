@@ -75,6 +75,8 @@ namespace RealtimeBlendDemo
             Camera = task.Result;
 
             Camera.SetPreviewResolutionAsync(resolution).AsTask().Wait();
+
+            Texture = new Uri(@"Assets/Textures/texture3.jpg", UriKind.Relative);
         }
 
         // Code to execute when the application is activated (brought to foreground)
