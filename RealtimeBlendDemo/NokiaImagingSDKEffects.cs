@@ -31,26 +31,11 @@ namespace RealtimeBlendDemo
         private IImageProvider _blendImageProvider = null;
         private int _effectIndex = 1;
         private int _effectCount = 16;
-        private double _effectLevel = 0.5;
         private Semaphore _semaphore = new Semaphore(1, 1);
 
         public String EffectName { get; private set; }
 
-        public double EffectLevel
-        {
-            get
-            {
-                return _effectLevel;
-            }
-
-            set
-            {
-                if (_effectLevel != value)
-                {
-                    _effectLevel = value;
-                }
-            }
-        }
+        public double EffectLevel { get; set; }
 
         public PhotoCaptureDevice PhotoCaptureDevice
         {
@@ -67,6 +52,11 @@ namespace RealtimeBlendDemo
                     _semaphore.Release();
                 }
             }
+        }
+
+        public NokiaImagingSDKEffects()
+        {
+            EffectLevel = 0.5;
         }
 
         ~NokiaImagingSDKEffects()
@@ -89,7 +79,7 @@ namespace RealtimeBlendDemo
                 {
                     if (_filterEffect != null)
                     {
-                        _blendFilter.Level = _effectLevel;
+                        _blendFilter.Level = EffectLevel;
 
                         var renderer = new BitmapRenderer(_filterEffect, bitmap);
                         await renderer.RenderAsync();
