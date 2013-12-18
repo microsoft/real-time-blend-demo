@@ -82,6 +82,38 @@ namespace RealtimeBlendDemo
             Uninitialize();
         }
 
+        protected override void OnOrientationChanged(OrientationChangedEventArgs e)
+        {
+            base.OnOrientationChanged(e);
+
+            if (App.Camera != null)
+            {
+                double canvasAngle;
+
+                if (Orientation.HasFlag(PageOrientation.LandscapeLeft))
+                {
+                    canvasAngle = App.Camera.SensorRotationInDegrees - 90;
+                }
+                else if (Orientation.HasFlag(PageOrientation.LandscapeRight))
+                {
+                    canvasAngle = App.Camera.SensorRotationInDegrees + 90;
+                }
+                else // PageOrientation.PortraitUp
+                {
+                    canvasAngle = App.Camera.SensorRotationInDegrees;
+                }
+
+                BackgroundVideoBrush.RelativeTransform = new RotateTransform()
+                {
+                    CenterX = 0.5,
+                    CenterY = 0.5,
+                    Angle = canvasAngle
+                };
+
+                App.Camera.SetProperty(KnownCameraGeneralProperties.EncodeWithOrientation, canvasAngle);
+            }
+        }
+
         private void Initialize()
         {
             StatusTextBlock.Text = AppResources.MainPage_Status_InitializingCamera;
