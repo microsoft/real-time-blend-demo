@@ -35,9 +35,12 @@ Make sure you have the following installed:
 
 This project uses the Nuget Automatic Package Restore that was introduced in Nuget 2.7.
 For this reason you must have Nuget 2.7 or later, otherwise building the project will fail.
-To update your Nuget Package Manager installation in Visual Studio Express to the latest
-version, go to Tools -> Extensions and Updates -> Updates -> Visual Studio Gallery
-and see if there is a Nuget update available.
+
+To update your Nuget Package Manager installation:
+
+1. Open Visual Studio Express for Windows Phone
+2. From the menu, navigate to Tools, Extensions and Updates, Updates, Visual Studio Gallery
+3. Check if there is a Nuget update available and if yes, install it.
 
 For more information on Nuget see: http://docs.nuget.org/docs/reference/package-restore
 
@@ -93,7 +96,7 @@ None.
 License
 -------
 
-    Copyright © 2013 Nokia Corporation. All rights reserved.
+    Copyright ï¿½ 2013 Nokia Corporation. All rights reserved.
     
     Nokia, Nokia Developer, and HERE are trademarks and/or registered trademarks of
     Nokia Corporation. Other product and company names mentioned herein may be
@@ -101,7 +104,7 @@ License
     
     License
     Subject to the conditions below, you may use, copy, modify and/or merge copies
-    of this software and associated content and documentation files (the “Software”)
+    of this software and associated content and documentation files (the ï¿½Softwareï¿½)
     to test, develop, publish, distribute, sub-license and/or sell new software
     derived from or incorporating the Software, solely in connection with Nokia
     devices. Some of the documentation, content and/or software maybe licensed under
