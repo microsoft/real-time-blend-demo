@@ -1,9 +1,11 @@
-﻿/*
- * Copyright © 2013 Nokia Corporation. All rights reserved.
- * Nokia and Nokia Connecting People are registered trademarks of Nokia Corporation. 
+﻿/**
+ * Copyright (c) 2013 Nokia Corporation. All rights reserved.
+ *
+ * Nokia and Nokia Connecting People are registered trademarks of Nokia Corporation.
  * Other product and company names mentioned herein may be trademarks
- * or trade names of their respective owners. 
- * See LICENSE.TXT for license information.
+ * or trade names of their respective owners.
+ *
+ * See the license text file for license information.
  */
 
 using System;
@@ -20,7 +22,8 @@ using Windows.Foundation;
 namespace RealtimeBlendDemo
 {
     /// <summary>
-    /// Filtered camera stream source for a media element. Feeds the media element with frames filtered with a ICameraEffect implementation.
+    /// Filtered camera stream source for a media element. Feeds the media
+    /// element with frames filtered with a ICameraEffect implementation.
     /// </summary>
     public class CameraStreamSource : MediaStreamSource
     {
@@ -124,13 +127,14 @@ namespace RealtimeBlendDemo
         }
 
         /// <summary>
-        /// Processes camera frameBuffer using the set effect and provides media element with a filtered frameBuffer.
+        /// Processes camera frame buffer using the set effect and provides
+        /// media element with a filtered frame buffer.
         /// </summary>
         protected override void GetSampleAsync(MediaStreamType mediaStreamType)
         {
             var task = _cameraEffect.GetNewFrameAndApplyEffect(_frameBuffer.AsBuffer(), _frameSize);
-           
-            // When asynchroneous call completes, proceed by reporting about the sample completion
+
+            // When asynchronous call completes, proceed by reporting about the sample completion
 
             task.ContinueWith((action) =>
             {
@@ -140,7 +144,9 @@ namespace RealtimeBlendDemo
                     _currentTime += _frameTime;
                     _frameCount++;
 
-                    var sample = new MediaStreamSample(_videoStreamDescription, _frameStream, _frameStreamOffset, _frameBufferSize, _currentTime, _emptyAttributes);
+                    var sample = new MediaStreamSample(
+                        _videoStreamDescription, _frameStream, _frameStreamOffset,
+                        _frameBufferSize, _currentTime, _emptyAttributes);
 
                     ReportGetSampleCompleted(sample);
                 }

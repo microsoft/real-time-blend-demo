@@ -1,10 +1,13 @@
-﻿/*
- * Copyright © 2013 Nokia Corporation. All rights reserved.
- * Nokia and Nokia Connecting People are registered trademarks of Nokia Corporation. 
+﻿/**
+ * Copyright (c) 2013 Nokia Corporation. All rights reserved.
+ *
+ * Nokia and Nokia Connecting People are registered trademarks of Nokia Corporation.
  * Other product and company names mentioned herein may be trademarks
- * or trade names of their respective owners. 
- * See LICENSE.TXT for license information.
+ * or trade names of their respective owners.
+ *
+ * See the license text file for license information.
  */
+
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using RealtimeBlendDemo.Resources;
