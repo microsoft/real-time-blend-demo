@@ -131,7 +131,7 @@
     <Content Include="Assets\Icons\previous.png" />
     <Content Include="Assets\Icons\next.png" />
     <Content Include="Assets\Textures\texture1-thumb.jpg" />
-    <Content Include="Assets\Textures\texture1.jpg" />
+    <Content Include="Assets\Textures\texture1.png" />
     <Content Include="Assets\Textures\texture2-thumb.jpg" />
     <Content Include="Assets\Textures\texture2.jpg" />
     <Content Include="Assets\Textures\texture3-thumb.jpg" />

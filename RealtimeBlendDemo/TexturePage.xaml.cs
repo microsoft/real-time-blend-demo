@@ -50,7 +50,7 @@ namespace RealtimeBlendDemo
         {
             Textures = new ObservableCollection<Texture>()
             {
-                new Texture(new Uri(@"Assets/Textures/texture1.jpg", UriKind.Relative), new Uri(@"Assets/Textures/texture1-thumb.jpg", UriKind.Relative)),
+                new Texture(new Uri(@"Assets/Textures/texture1.png", UriKind.Relative), new Uri(@"Assets/Textures/texture1-thumb.jpg", UriKind.Relative)),
                 new Texture(new Uri(@"Assets/Textures/texture2.jpg", UriKind.Relative), new Uri(@"Assets/Textures/texture2-thumb.jpg", UriKind.Relative)),
                 new Texture(new Uri(@"Assets/Textures/texture3.jpg", UriKind.Relative), new Uri(@"Assets/Textures/texture3-thumb.jpg", UriKind.Relative)),
                 new Texture(new Uri(@"Assets/Textures/texture4.jpg", UriKind.Relative), new Uri(@"Assets/Textures/texture4-thumb.jpg", UriKind.Relative)),
