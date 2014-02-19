@@ -28,17 +28,17 @@ namespace RealtimeBlendDemo
     public class CameraStreamSource : MediaStreamSource
     {
         private readonly Dictionary<MediaSampleAttributeKeys, string> _emptyAttributes = new Dictionary<MediaSampleAttributeKeys, string>();
-        private MediaStreamDescription _videoStreamDescription = null;
-        private DispatcherTimer _frameRateTimer = null;
-        private MemoryStream _frameStream = null;
-        private ICameraEffect _cameraEffect = null;
-        private long _currentTime = 0;
-        private int _frameStreamOffset = 0;
-        private int _frameTime = 0;
-        private int _frameCount = 0;
+        private MediaStreamDescription _videoStreamDescription;
+        private DispatcherTimer _frameRateTimer;
+        private MemoryStream _frameStream;
+        private ICameraEffect _cameraEffect;
+        private long _currentTime;
+        private int _frameStreamOffset;
+        private int _frameTime;
+        private int _frameCount;
         private Size _frameSize = new Size(0, 0);
-        private int _frameBufferSize = 0;
-        private byte[] _frameBuffer = null;
+        private int _frameBufferSize;
+        private byte[] _frameBuffer;
 
         /// <summary>
         /// Occurs when rendering frame rate changes.
@@ -48,7 +48,7 @@ namespace RealtimeBlendDemo
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="_cameraEffect">Camera effect to use.</param>
+        /// <param name="cameraEffect">Camera effect to use.</param>
         /// <param name="size">Size of the media element where the stream is rendered to.</param>
         public CameraStreamSource(ICameraEffect cameraEffect, Size size)
         {
@@ -80,8 +80,7 @@ namespace RealtimeBlendDemo
 
             // Media stream descriptions
 
-            var mediaStreamDescriptions = new List<MediaStreamDescription>();
-            mediaStreamDescriptions.Add(_videoStreamDescription);
+            var mediaStreamDescriptions = new List<MediaStreamDescription> {_videoStreamDescription};
 
             // Media source attributes
 

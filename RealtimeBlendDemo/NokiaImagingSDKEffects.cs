@@ -23,15 +23,15 @@ namespace RealtimeBlendDemo
 {
     public class NokiaImagingSDKEffects : ICameraEffect
     {
-        private PhotoCaptureDevice _photoCaptureDevice = null;
-        private CameraPreviewImageSource _cameraPreviewImageSource = null;
-        private FilterEffect _filterEffect = null;
-        private BlendFilter _blendFilter = null;
-        private Uri _blendImageUri = null;
-        private IImageProvider _blendImageProvider = null;
+        private PhotoCaptureDevice _photoCaptureDevice;
+        private CameraPreviewImageSource _cameraPreviewImageSource;
+        private FilterEffect _filterEffect;
+        private BlendFilter _blendFilter;
+        private Uri _blendImageUri;
+        private IImageProvider _blendImageProvider;
         private int _effectIndex = 1;
-        private int _effectCount = 16;
-        private Semaphore _semaphore = new Semaphore(1, 1);
+        private const int _effectCount = 16;
+        private readonly Semaphore _semaphore = new Semaphore(1, 1);
 
         public String EffectName { get; private set; }
 
@@ -320,9 +320,7 @@ namespace RealtimeBlendDemo
 
             if (_blendFilter != null)
             {
-                var filters = new List<IFilter>();
-
-                filters.Add(_blendFilter);
+                var filters = new List<IFilter> {_blendFilter};
 
                 _filterEffect = new FilterEffect(_cameraPreviewImageSource)
                 {

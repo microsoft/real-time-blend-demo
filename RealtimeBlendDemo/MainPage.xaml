@@ -86,7 +86,7 @@
                 <TextBlock Grid.Row="2" Text="Min" HorizontalAlignment="Center" Style="{StaticResource PhoneTextSmallStyle}" FontSize="14"/>
             </Grid>
             
-            <TextBlock Grid.Row="1" x:Name="StatusTextBlock" Margin="12"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" x:Name="StatusTextBlock" Margin="12"/>
             <TextBlock Grid.Row="1" Grid.Column="2" x:Name="FrameRateTextBlock" Margin="12"/>
         </Grid>
    </Grid>

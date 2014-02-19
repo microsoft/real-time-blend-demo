@@ -50,17 +50,15 @@ namespace RealtimeBlendDemo
             var projectRunText = AppResources.AboutPage_ProjectRun;
             var projectRunTextSpans = projectRunText.Split(new string[] { "{0}" }, StringSplitOptions.None);
 
-            var projectRunSpan1 = new Run();
-            projectRunSpan1.Text = projectRunTextSpans[0];
+            var projectRunSpan1 = new Run {Text = projectRunTextSpans[0]};
 
             var projectsLink = new Hyperlink();
             projectsLink.Inlines.Add(AppResources.AboutPage_Hyperlink_Project);
             projectsLink.Click += ProjectsLink_Click;
-            projectsLink.Foreground = new SolidColorBrush((Color)App.Current.Resources["PhoneForegroundColor"]);
-            projectsLink.MouseOverForeground = new SolidColorBrush((Color)App.Current.Resources["PhoneAccentColor"]);
+            projectsLink.Foreground = new SolidColorBrush((Color)Application.Current.Resources["PhoneForegroundColor"]);
+            projectsLink.MouseOverForeground = new SolidColorBrush((Color)Application.Current.Resources["PhoneAccentColor"]);
 
-            var projectRunSpan2 = new Run();
-            projectRunSpan2.Text = projectRunTextSpans[1] + "\n";
+            var projectRunSpan2 = new Run {Text = projectRunTextSpans[1] + "\n"};
 
             ProjectParagraph.Inlines.Add(projectRunSpan1);
             ProjectParagraph.Inlines.Add(projectsLink);

@@ -25,9 +25,9 @@ namespace RealtimeBlendDemo
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private MediaElement _mediaElement = null;
-        private NokiaImagingSDKEffects _cameraEffect = null;
-        private CameraStreamSource _cameraStreamSource = null;
+        private MediaElement _mediaElement;
+        private NokiaImagingSDKEffects _cameraEffect;
+        private CameraStreamSource _cameraStreamSource;
         private Semaphore _cameraSemaphore = new Semaphore(1, 1);
 
         public MainPage()
@@ -36,26 +36,31 @@ namespace RealtimeBlendDemo
 
             ApplicationBar = new ApplicationBar();
 
-            var textureButton = new ApplicationBarIconButton(new Uri("/Assets/Icons/texture.png", UriKind.Relative));
-            textureButton.Text = AppResources.MainPage_TextureButton;
+            var textureButton = new ApplicationBarIconButton(new Uri("/Assets/Icons/texture.png", UriKind.Relative))
+            {
+                Text = AppResources.MainPage_TextureButton
+            };
             textureButton.Click += TextureButton_Click;
 
             ApplicationBar.Buttons.Add(textureButton);
 
-            var previousButton = new ApplicationBarIconButton(new Uri("/Assets/Icons/previous.png", UriKind.Relative));
-            previousButton.Text = AppResources.MainPage_PreviousEffectButton;
+            var previousButton = new ApplicationBarIconButton(new Uri("/Assets/Icons/previous.png", UriKind.Relative))
+            {
+                Text = AppResources.MainPage_PreviousEffectButton
+            };
             previousButton.Click += PreviousButton_Click;
 
             ApplicationBar.Buttons.Add(previousButton);
 
-            var nextButton = new ApplicationBarIconButton(new Uri("/Assets/Icons/next.png", UriKind.Relative));
-            nextButton.Text = AppResources.MainPage_NextEffectButton;
+            var nextButton = new ApplicationBarIconButton(new Uri("/Assets/Icons/next.png", UriKind.Relative))
+            {
+                Text = AppResources.MainPage_NextEffectButton
+            };
             nextButton.Click += NextButton_Click;
 
             ApplicationBar.Buttons.Add(nextButton);
 
-            var aboutMenuItem = new ApplicationBarMenuItem();
-            aboutMenuItem.Text = AppResources.MainPage_AboutPageButton;
+            var aboutMenuItem = new ApplicationBarMenuItem {Text = AppResources.MainPage_AboutPageButton};
             aboutMenuItem.Click += AboutMenuItem_Click;
 
             ApplicationBar.MenuItems.Add(aboutMenuItem);
@@ -118,9 +123,7 @@ namespace RealtimeBlendDemo
         {
             StatusTextBlock.Text = AppResources.MainPage_Status_InitializingCamera;
 
-            _cameraEffect = new NokiaImagingSDKEffects();
-            _cameraEffect.PhotoCaptureDevice = App.Camera;
-            _cameraEffect.EffectLevel = 0.5;
+            _cameraEffect = new NokiaImagingSDKEffects {PhotoCaptureDevice = App.Camera, EffectLevel = 0.5};
             _cameraEffect.SetTexture(App.Texture);
 
             LevelSlider.Value = 0.5;
@@ -128,9 +131,7 @@ namespace RealtimeBlendDemo
             _cameraStreamSource = new CameraStreamSource(_cameraEffect, App.Camera.CaptureResolution);
             _cameraStreamSource.FrameRateChanged += CameraStreamSource_FPSChanged;
 
-            _mediaElement = new MediaElement();
-            _mediaElement.Stretch = Stretch.UniformToFill;
-            _mediaElement.BufferingTime = new TimeSpan(0);
+            _mediaElement = new MediaElement {Stretch = Stretch.UniformToFill, BufferingTime = new TimeSpan(0)};
             _mediaElement.SetSource(_cameraStreamSource);
 
             // Using VideoBrush in XAML instead of MediaElement, because otherwise
