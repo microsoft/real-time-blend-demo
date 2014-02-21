@@ -1,4 +1,4 @@
-Real-time Blend Demo
+﻿Real-time Blend Demo
 =====================
 
 Nokia example application demonstrating the real-time use of the blend effect
@@ -140,5 +140,8 @@ License
 
 Version history
 ---------------
+
+* 1.1: Fourth public release of Real-time Blend Demo
+  - Updated to the latest Nokia Imaging SDK version 1.1.177
 
 * 1.0: First public release of Real-time Blend Demo
