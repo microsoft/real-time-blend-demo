@@ -21,7 +21,7 @@ namespace RealtimeBlendDemo
 
         public static PhotoCaptureDevice Camera { get; set; }
 
-        public static Uri Texture { get; set; }
+        public static Texture Texture { get; set; }
 
         /// <summary>
         /// Constructor for the Application object.
@@ -76,7 +76,7 @@ namespace RealtimeBlendDemo
 
             Camera.SetPreviewResolutionAsync(resolution).AsTask().Wait();
 
-            Texture = new Uri(@"Assets/Textures/texture1.png", UriKind.Relative);
+            Texture = new Texture(new Uri(@"Assets/Textures/texture1.png", UriKind.Relative), new Uri(@"Assets/Textures/texture1-thumb.jpg", UriKind.Relative));
         }
 
         // Code to execute when the application is activated (brought to foreground)

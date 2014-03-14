@@ -206,8 +206,8 @@
   <data name="Filter_Blend_Lighten" xml:space="preserve">
     <value>Lighten</value>
   </data>
-  <data name="TexturePage_Title" xml:space="preserve">
-    <value>select texture</value>
+  <data name="TexturePage_FullscreenPivot_Title" xml:space="preserve">
+    <value>Fullscreen</value>
   </data>
   <data name="MainPage_TextureButton" xml:space="preserve">
     <value>change texture</value>
@@ -217,5 +217,11 @@
   </data>
   <data name="TexturePage_Application_Title" xml:space="preserve">
     <value>REAL-TIME BLEND DEMO - SELECT TEXTURE</value>
+  </data>
+  <data name="TexturePage_PositionalPivot_Title" xml:space="preserve">
+    <value>Partial</value>
+  </data>
+  <data name="MainPage_PositionalFilterHelpText" xml:space="preserve">
+    <value>DRAG TO POSITION TEXTURE</value>
   </data>
 </root>

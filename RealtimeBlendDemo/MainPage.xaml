@@ -47,7 +47,7 @@
     </toolkit:TransitionService.NavigationOutTransition>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Tap="LayoutRoot_Tap">
+    <Grid x:Name="LayoutRoot" Tap="LayoutRoot_Tap" MouseMove="LayoutRoot_MouseMove" MouseLeftButtonDown="LayoutRoot_MouseMove">
         <Grid.Background>
             <VideoBrush x:Name="BackgroundVideoBrush" Stretch="UniformToFill"/>
         </Grid.Background>
@@ -58,9 +58,10 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding Path=LocalizedResources.Application_Title, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}" />
-        </StackPanel>
+        <Grid Grid.Row="0" Margin="12,17,12,28">
+            <TextBlock Grid.Column="0" Text="{Binding Path=LocalizedResources.Application_Title, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}" />
+            <TextBlock x:Name="PositioningHintText" Visibility="Collapsed" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding Path=LocalizedResources.MainPage_PositionalFilterHelpText, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}" />
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
         <Grid Grid.Row="1" Margin="12,0,12,0">
@@ -82,13 +83,14 @@
                 </Grid.RowDefinitions>
                 
                 <TextBlock Text="Max" HorizontalAlignment="Center" Style="{StaticResource PhoneTextSmallStyle}" FontSize="14"/>
-                <Slider x:Name="LevelSlider" Grid.Row="1" Orientation="Vertical" ValueChanged="Slider_ValueChanged" Minimum="0" Maximum="1" LargeChange="0.2"/>
+                <Slider x:Name="LevelSlider" Grid.Row="1" Orientation="Vertical" ManipulationStarted="Slider_ManipulationStarted" ManipulationCompleted="Slider_ManipulationCompleted" ValueChanged="Slider_ValueChanged" Minimum="0" Maximum="1" LargeChange="0.2"/>
                 <TextBlock Grid.Row="2" Text="Min" HorizontalAlignment="Center" Style="{StaticResource PhoneTextSmallStyle}" FontSize="14"/>
             </Grid>
             
             <TextBlock Grid.Row="1" Grid.Column="0" x:Name="StatusTextBlock" Margin="12"/>
             <TextBlock Grid.Row="1" Grid.Column="2" x:Name="FrameRateTextBlock" Margin="12"/>
         </Grid>
+                
    </Grid>
 
 </phone:PhoneApplicationPage>

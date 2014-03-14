@@ -27,6 +27,7 @@ namespace RealtimeBlendDemo
         private CameraPreviewImageSource _cameraPreviewImageSource;
         private FilterEffect _filterEffect;
         private BlendFilter _blendFilter;
+        private Rect _targetArea;
         private Uri _blendImageUri;
         private IImageProvider _blendImageProvider;
         private int _effectIndex = 1;
@@ -57,6 +58,7 @@ namespace RealtimeBlendDemo
         public NokiaImagingSDKEffects()
         {
             EffectLevel = 0.5;
+            _targetArea = new Rect(0, 0, 1, 1);
         }
 
         ~NokiaImagingSDKEffects()
@@ -109,6 +111,20 @@ namespace RealtimeBlendDemo
                 _blendImageUri = textureUri;
 
                 Initialize();
+
+                _semaphore.Release();
+            }
+        }
+
+        public void SetTargetArea(Rect targetArea)
+        {
+            if (_semaphore.WaitOne(500))
+            {
+                _targetArea = targetArea;
+
+                if (_blendFilter != null) {
+                    _blendFilter.TargetArea = targetArea;
+                }
 
                 _semaphore.Release();
             }
@@ -321,6 +337,7 @@ namespace RealtimeBlendDemo
             if (_blendFilter != null)
             {
                 var filters = new List<IFilter> {_blendFilter};
+                _blendFilter.TargetArea = _targetArea;
 
                 _filterEffect = new FilterEffect(_cameraPreviewImageSource)
                 {

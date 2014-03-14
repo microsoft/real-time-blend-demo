@@ -48,38 +48,56 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding Path=LocalizedResources.TexturePage_Application_Title, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>
-        </StackPanel>
+        <phone:Pivot Title="{Binding Path=LocalizedResources.TexturePage_Application_Title, Source={StaticResource LocalizedStrings}}">
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ScrollViewer x:Name="PhotosPanel" Margin="12,0,2,0">
-                <ItemsControl ItemsSource="{Binding Textures}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <toolkit:WrapPanel ItemWidth="250" ItemHeight="187"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+            <!-- Pivot for full screen textures -->
+            <phone:PivotItem Header="{Binding Path=LocalizedResources.TexturePage_FullscreenPivot_Title, Source={StaticResource LocalizedStrings}}">
+                <ScrollViewer x:Name="PhotosPanel" Margin="12,0,2,0">
+                    <ItemsControl ItemsSource="{Binding FullscreenTextures}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <toolkit:WrapPanel ItemWidth="250" ItemHeight="187"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="0,0,8,8" Tag="{Binding File}" Tap="Thumbnail_Tap">
-                                <Border BorderThickness="1" BorderBrush="{StaticResource PhoneForegroundBrush}">
-                                    <Image Source="{Binding Thumbnail}" CacheMode="BitmapCache" Stretch="Fill"/>
-                                </Border>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Grid>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,8,8" Tap="Thumbnail_Tap">
+                                    <Border BorderThickness="1" BorderBrush="{StaticResource PhoneForegroundBrush}">
+                                        <Image Source="{Binding Thumbnail}" CacheMode="BitmapCache" Stretch="Fill"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </phone:PivotItem>
+
+            <!-- Pivot for positional textures -->
+            <phone:PivotItem Header="{Binding Path=LocalizedResources.TexturePage_PositionalPivot_Title, Source={StaticResource LocalizedStrings}}">
+                <ScrollViewer x:Name="PositionalTexturesPanel" Margin="12,0,2,0">
+                    <ItemsControl ItemsSource="{Binding PositionalTextures}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <toolkit:WrapPanel ItemWidth="250" ItemHeight="187"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,8,8" Tap="Thumbnail_Tap">
+                                    <Border BorderThickness="1" BorderBrush="{StaticResource PhoneForegroundBrush}">
+                                        <Image Source="{Binding Thumbnail}" CacheMode="BitmapCache" Stretch="Fill"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </phone:PivotItem>
+            
+        </phone:Pivot>
     </Grid>
 
 </phone:PhoneApplicationPage>

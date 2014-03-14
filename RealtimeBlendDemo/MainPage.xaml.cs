@@ -29,6 +29,7 @@ namespace RealtimeBlendDemo
         private NokiaImagingSDKEffects _cameraEffect;
         private CameraStreamSource _cameraStreamSource;
         private Semaphore _cameraSemaphore = new Semaphore(1, 1);
+        private bool _zooming;
 
         public MainPage()
         {
@@ -124,7 +125,25 @@ namespace RealtimeBlendDemo
             StatusTextBlock.Text = AppResources.MainPage_Status_InitializingCamera;
 
             _cameraEffect = new NokiaImagingSDKEffects {PhotoCaptureDevice = App.Camera, EffectLevel = 0.5};
-            _cameraEffect.SetTexture(App.Texture);
+            _cameraEffect.SetTexture(App.Texture.File);
+
+            if (App.Texture.IsPositional)
+            {
+                _cameraEffect.SetTargetArea(
+                    new Windows.Foundation.Rect(
+                        0.25,
+                        0.25,
+                        0.5,
+                        0.5)
+                );
+                PositioningHintText.Visibility = Visibility.Visible;
+            }
+            else {
+                _cameraEffect.SetTargetArea(
+                    new Windows.Foundation.Rect(0, 0, 1, 1)
+                );
+                PositioningHintText.Visibility = Visibility.Collapsed;
+            }
 
             LevelSlider.Value = 0.5;
 
@@ -200,9 +219,34 @@ namespace RealtimeBlendDemo
             }
         }
 
+        private void LayoutRoot_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (App.Texture.IsPositional && !_zooming)
+            {
+                _cameraEffect.SetTargetArea(
+                    new Windows.Foundation.Rect(
+                        e.GetPosition(LayoutRoot).X / LayoutRoot.ActualWidth - 0.25,
+                        e.GetPosition(LayoutRoot).Y / LayoutRoot.ActualHeight - 0.25,
+                        0.5,
+                        0.5)
+                );
+            }
+        }
+
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _cameraEffect.EffectLevel = e.NewValue;
         }
+
+        private void Slider_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
+        {
+            _zooming = true;
+        }
+
+        private void Slider_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        {
+            _zooming = false;
+        }
+
     }
 }

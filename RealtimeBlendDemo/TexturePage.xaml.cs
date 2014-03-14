@@ -16,30 +16,14 @@ using System.Windows.Navigation;
 
 namespace RealtimeBlendDemo
 {
-    public class Texture
-    {
-        public Uri File { get; private set; }
-        public Uri Thumbnail { get; private set; }
-
-        public Texture(Uri file)
-        {
-            File = file;
-            Thumbnail = file;
-        }
-
-        public Texture(Uri file, Uri thumbnail)
-        {
-            File = file;
-            Thumbnail = thumbnail;
-        }
-    }
 
     /// <summary>
     /// Page for selecting the texture for the blend effect.
     /// </summary>
     public partial class TexturePage : PhoneApplicationPage
     {
-        public ObservableCollection<Texture> Textures { get; private set; }
+        public ObservableCollection<Texture> FullscreenTextures { get; private set; }
+        public ObservableCollection<Texture> PositionalTextures { get; private set; }
 
         public TexturePage()
         {
@@ -48,7 +32,7 @@ namespace RealtimeBlendDemo
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Textures = new ObservableCollection<Texture>()
+            FullscreenTextures = new ObservableCollection<Texture>()
             {
                 new Texture(new Uri(@"Assets/Textures/texture1.png", UriKind.Relative), new Uri(@"Assets/Textures/texture1-thumb.jpg", UriKind.Relative)),
                 new Texture(new Uri(@"Assets/Textures/texture2.jpg", UriKind.Relative), new Uri(@"Assets/Textures/texture2-thumb.jpg", UriKind.Relative)),
@@ -61,6 +45,12 @@ namespace RealtimeBlendDemo
                 new Texture(null, new Uri(@"Assets/Textures/gradient-thumb.jpg", UriKind.Relative))
             };
 
+            PositionalTextures = new ObservableCollection<Texture>()            
+            {
+                new Texture(new Uri(@"Assets/Textures/texture1.png", UriKind.Relative), new Uri(@"Assets/Textures/texture1-thumb.jpg", UriKind.Relative), true),
+                new Texture(new Uri(@"Assets/Textures/texture9.png", UriKind.Relative), new Uri(@"Assets/Textures/texture9-thumb.jpg", UriKind.Relative), true)
+            };
+
             DataContext = this;
         }
 
@@ -69,15 +59,12 @@ namespace RealtimeBlendDemo
             base.OnNavigatedFrom(e);
 
             DataContext = null;
-            Textures = null;
+            FullscreenTextures = null;
         }
 
         private void Thumbnail_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            var image = (FrameworkElement)sender;
-            var file = (Uri)image.Tag;
-
-            App.Texture = file;
+            App.Texture = ((FrameworkElement)sender).DataContext as Texture;
 
             NavigationService.GoBack();
         }
