@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using Windows.Phone.Media.Capture;
@@ -29,7 +30,14 @@ namespace RealtimeBlendDemo
         private NokiaImagingSDKEffects _cameraEffect;
         private CameraStreamSource _cameraStreamSource;
         private Semaphore _cameraSemaphore = new Semaphore(1, 1);
-        private bool _zooming;
+
+        private Point _position;
+        private Point _initialPosition;
+        private double _angle;
+        private double _initialAngle;
+        private double _scale;
+
+        private const double DEFAULT_SCALE = 0.5;
 
         public MainPage()
         {
@@ -121,28 +129,28 @@ namespace RealtimeBlendDemo
         }
 
         private void Initialize()
-        {
+        {            
             StatusTextBlock.Text = AppResources.MainPage_Status_InitializingCamera;
 
             _cameraEffect = new NokiaImagingSDKEffects {PhotoCaptureDevice = App.Camera, EffectLevel = 0.5};
-            _cameraEffect.SetTexture(App.Texture.File);
+            _cameraEffect.SetTexture(App.Texture.File);          
 
             if (App.Texture.IsPositional)
             {
-                _cameraEffect.SetTargetArea(
-                    new Windows.Foundation.Rect(
-                        0.25,
-                        0.25,
-                        0.5,
-                        0.5)
-                );
-                PositioningHintText.Visibility = Visibility.Visible;
+                DragHintText.Visibility = Visibility.Visible;
+                PinchHintText.Visibility = Visibility.Visible;
+
+                _angle = 0;
+                _initialAngle = 0;
+                _scale = DEFAULT_SCALE;
+                _position = new Point(0.5, 0.5);
+                _initialPosition = new Point(0.5, 0.5);
+
+                RefreshTargetArea();
             }
             else {
-                _cameraEffect.SetTargetArea(
-                    new Windows.Foundation.Rect(0, 0, 1, 1)
-                );
-                PositioningHintText.Visibility = Visibility.Collapsed;
+                DragHintText.Visibility = Visibility.Collapsed;
+                PinchHintText.Visibility = Visibility.Collapsed;
             }
 
             LevelSlider.Value = 0.5;
@@ -219,33 +227,78 @@ namespace RealtimeBlendDemo
             }
         }
 
-        private void LayoutRoot_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void RefreshTargetArea()        
         {
-            if (App.Texture.IsPositional && !_zooming)
-            {
+            if (App.Texture.IsPositional) {
                 _cameraEffect.SetTargetArea(
                     new Windows.Foundation.Rect(
-                        e.GetPosition(LayoutRoot).X / LayoutRoot.ActualWidth - 0.25,
-                        e.GetPosition(LayoutRoot).Y / LayoutRoot.ActualHeight - 0.25,
-                        0.5,
-                        0.5)
+                        _position.X - (_scale / 2),
+                        _position.Y - (_scale / 2),
+                        _scale,
+                        _scale),
+                        _angle
                 );
             }
+        }
+
+        private void LayoutRoot_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        {
+            _initialAngle = _angle;
+        }
+
+        private void LayoutRoot_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        {
+            if (e.PinchManipulation != null)
+            {
+                // Rotate
+                _angle = _initialAngle + AngleOf(e.PinchManipulation.Original) - AngleOf(e.PinchManipulation.Current);
+
+                // Scale
+                _scale *= e.PinchManipulation.DeltaScale;
+
+                // Translate according to pinch center
+                double deltaX = (e.PinchManipulation.Current.SecondaryContact.X + e.PinchManipulation.Current.PrimaryContact.X) / 2 -
+                    (e.PinchManipulation.Original.SecondaryContact.X + e.PinchManipulation.Original.PrimaryContact.X) / 2;
+                deltaX /= LayoutRoot.ActualWidth;
+                    
+                double deltaY = (e.PinchManipulation.Current.SecondaryContact.Y + e.PinchManipulation.Current.PrimaryContact.Y) / 2 -
+                    (e.PinchManipulation.Original.SecondaryContact.Y + e.PinchManipulation.Original.PrimaryContact.Y) / 2;
+                deltaY /= LayoutRoot.ActualHeight;
+
+                _position.X = _initialPosition.X + deltaX;
+                _position.Y = _initialPosition.Y + deltaY;               
+            }
+            else {
+                // Translate
+                _initialAngle = _angle;
+                _position.X += e.DeltaManipulation.Translation.X / LayoutRoot.ActualWidth;
+                _position.Y += e.DeltaManipulation.Translation.Y / LayoutRoot.ActualHeight;
+                _initialPosition.X = _position.X;
+                _initialPosition.Y = _position.Y;
+            }
+
+            e.Handled = true;
+
+            RefreshTargetArea();
+        }
+
+        private double AngleOf(PinchContactPoints points)
+        {
+            Point vec = new Point(points.SecondaryContact.X - points.PrimaryContact.X, points.SecondaryContact.Y - points.PrimaryContact.Y);
+
+            double angle = Math.Atan2(vec.Y, vec.X);
+
+            if (angle < 0)
+            {
+                angle += 2 * Math.PI;
+            }
+
+            return angle * 180 / Math.PI;
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _cameraEffect.EffectLevel = e.NewValue;
-        }
-
-        private void Slider_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
-        {
-            _zooming = true;
-        }
-
-        private void Slider_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
-        {
-            _zooming = false;
         }
 
     }

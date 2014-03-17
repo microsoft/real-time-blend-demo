@@ -28,6 +28,7 @@ namespace RealtimeBlendDemo
         private FilterEffect _filterEffect;
         private BlendFilter _blendFilter;
         private Rect _targetArea;
+        private double _targetAreaRotation;
         private Uri _blendImageUri;
         private IImageProvider _blendImageProvider;
         private int _effectIndex = 1;
@@ -116,14 +117,16 @@ namespace RealtimeBlendDemo
             }
         }
 
-        public void SetTargetArea(Rect targetArea)
+        public void SetTargetArea(Rect targetArea, double targetAreaRotation)
         {
             if (_semaphore.WaitOne(500))
             {
                 _targetArea = targetArea;
+                _targetAreaRotation = targetAreaRotation;
 
                 if (_blendFilter != null) {
                     _blendFilter.TargetArea = targetArea;
+                    _blendFilter.TargetAreaRotation = targetAreaRotation;
                 }
 
                 _semaphore.Release();
@@ -336,8 +339,10 @@ namespace RealtimeBlendDemo
 
             if (_blendFilter != null)
             {
-                var filters = new List<IFilter> {_blendFilter};
                 _blendFilter.TargetArea = _targetArea;
+                _blendFilter.TargetAreaRotation = _targetAreaRotation;
+
+                var filters = new List<IFilter> {_blendFilter};
 
                 _filterEffect = new FilterEffect(_cameraPreviewImageSource)
                 {
