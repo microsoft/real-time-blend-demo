@@ -229,11 +229,14 @@ namespace RealtimeBlendDemo
 
         private void RefreshTargetArea()        
         {
+            double x = Orientation.HasFlag(PageOrientation.LandscapeRight) ? 1 - _position.X : _position.X;
+            double y = Orientation.HasFlag(PageOrientation.LandscapeRight) ? 1 - _position.Y : _position.Y;
+
             if (App.Texture.IsPositional) {
                 _cameraEffect.SetTargetArea(
                     new Windows.Foundation.Rect(
-                        _position.X - (_scale / 2),
-                        _position.Y - (_scale / 2),
+                        x - (_scale / 2),
+                        y - (_scale / 2),
                         _scale,
                         _scale),
                         _angle
