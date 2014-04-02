@@ -141,6 +141,8 @@ License
 Version history
 ---------------
 
+* 1.2: Partial blend filter
+
 * 1.1: Fourth public release of Real-time Blend Demo
   - Updated to the latest Nokia Imaging SDK version 1.1.177
 
