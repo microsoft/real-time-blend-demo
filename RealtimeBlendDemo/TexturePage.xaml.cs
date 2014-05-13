@@ -32,7 +32,7 @@ namespace RealtimeBlendDemo
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            FullscreenTextures = new ObservableCollection<Texture>()
+            FullscreenTextures = new ObservableCollection<Texture>
             {
                 new Texture(new Uri(@"Assets/Textures/texture1.png", UriKind.Relative), new Uri(@"Assets/Textures/texture1-thumb.jpg", UriKind.Relative)),
                 new Texture(new Uri(@"Assets/Textures/texture2.jpg", UriKind.Relative), new Uri(@"Assets/Textures/texture2-thumb.jpg", UriKind.Relative)),
@@ -45,7 +45,7 @@ namespace RealtimeBlendDemo
                 new Texture(null, new Uri(@"Assets/Textures/gradient-thumb.jpg", UriKind.Relative))
             };
 
-            PositionalTextures = new ObservableCollection<Texture>()            
+            PositionalTextures = new ObservableCollection<Texture>
             {
                 new Texture(new Uri(@"Assets/Textures/texture1.png", UriKind.Relative), new Uri(@"Assets/Textures/texture1-thumb.jpg", UriKind.Relative), true),
                 new Texture(new Uri(@"Assets/Textures/texture9.png", UriKind.Relative), new Uri(@"Assets/Textures/texture9-thumb.jpg", UriKind.Relative), true)

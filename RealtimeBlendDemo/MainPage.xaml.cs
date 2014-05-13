@@ -12,8 +12,6 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using RealtimeBlendDemo.Resources;
 using System;
-using System.IO.IsolatedStorage;
-using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +25,7 @@ namespace RealtimeBlendDemo
     public partial class MainPage : PhoneApplicationPage
     {
         private MediaElement _mediaElement;
-        private NokiaImagingSDKEffects _cameraEffect;
+        private Effects _cameraEffect;
         private CameraStreamSource _cameraStreamSource;
         private Semaphore _cameraSemaphore = new Semaphore(1, 1);
 
@@ -37,7 +35,7 @@ namespace RealtimeBlendDemo
         private double _initialAngle;
         private double _scale;
 
-        private const double DEFAULT_SCALE = 0.5;
+        private const double DefaultScale = 0.5;
 
         public MainPage()
         {
@@ -132,7 +130,7 @@ namespace RealtimeBlendDemo
         {            
             StatusTextBlock.Text = AppResources.MainPage_Status_InitializingCamera;
 
-            _cameraEffect = new NokiaImagingSDKEffects {PhotoCaptureDevice = App.Camera, EffectLevel = 0.5};
+            _cameraEffect = new Effects {PhotoCaptureDevice = App.Camera, EffectLevel = 0.5};
             _cameraEffect.SetTexture(App.Texture.File);          
 
             if (App.Texture.IsPositional)
@@ -142,7 +140,7 @@ namespace RealtimeBlendDemo
 
                 _angle = 0;
                 _initialAngle = 0;
-                _scale = DEFAULT_SCALE;
+                _scale = DefaultScale;
                 _position = new Point(0.5, 0.5);
                 _initialPosition = new Point(0.5, 0.5);
 
@@ -287,7 +285,7 @@ namespace RealtimeBlendDemo
 
         private double AngleOf(PinchContactPoints points)
         {
-            Point vec = new Point(points.SecondaryContact.X - points.PrimaryContact.X, points.SecondaryContact.Y - points.PrimaryContact.Y);
+            var vec = new Point(points.SecondaryContact.X - points.PrimaryContact.X, points.SecondaryContact.Y - points.PrimaryContact.Y);
 
             double angle = Math.Atan2(vec.Y, vec.X);
 

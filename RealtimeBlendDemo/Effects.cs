@@ -21,7 +21,7 @@ using Windows.UI;
 
 namespace RealtimeBlendDemo
 {
-    public class NokiaImagingSDKEffects : ICameraEffect
+    public class Effects : ICameraEffect
     {
         private PhotoCaptureDevice _photoCaptureDevice;
         private CameraPreviewImageSource _cameraPreviewImageSource;
@@ -32,7 +32,7 @@ namespace RealtimeBlendDemo
         private Uri _blendImageUri;
         private IImageProvider _blendImageProvider;
         private int _effectIndex = 1;
-        private const int _effectCount = 16;
+        private const int EffectCount = 16;
         private readonly Semaphore _semaphore = new Semaphore(1, 1);
 
         public String EffectName { get; private set; }
@@ -56,13 +56,13 @@ namespace RealtimeBlendDemo
             }
         }
 
-        public NokiaImagingSDKEffects()
+        public Effects()
         {
             EffectLevel = 0.5;
             _targetArea = new Rect(0, 0, 1, 1);
         }
 
-        ~NokiaImagingSDKEffects()
+        ~Effects()
         {
             while (!_semaphore.WaitOne(100));
 
@@ -141,7 +141,7 @@ namespace RealtimeBlendDemo
 
                 _effectIndex++;
 
-                if (_effectIndex >= _effectCount)
+                if (_effectIndex >= EffectCount)
                 {
                     _effectIndex = 0;
                 }
@@ -162,7 +162,7 @@ namespace RealtimeBlendDemo
 
                 if (_effectIndex < 0)
                 {
-                    _effectIndex = _effectCount - 1;
+                    _effectIndex = EffectCount - 1;
                 }
 
                 Initialize();
@@ -209,9 +209,9 @@ namespace RealtimeBlendDemo
             {
                 var colorStops = new GradientStop[]
                 {
-                    new GradientStop() { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Offset = 0.0 },
-                    new GradientStop() { Color = Color.FromArgb(0xFF, 0x00, 0xFF, 0x00), Offset = 0.7 },
-                    new GradientStop() { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Offset = 1.0 }
+                    new GradientStop { Color = Color.FromArgb(0xFF, 0xFF, 0x00, 0x00), Offset = 0.0 },
+                    new GradientStop { Color = Color.FromArgb(0xFF, 0x00, 0xFF, 0x00), Offset = 0.7 },
+                    new GradientStop { Color = Color.FromArgb(0xFF, 0x00, 0x00, 0xFF), Offset = 1.0 }
                 };
 
                 var gradient = new RadialGradient(new Point(0, 0), new EllipseRadius(1, 0), colorStops);
@@ -221,7 +221,7 @@ namespace RealtimeBlendDemo
                 _blendImageProvider = new GradientImageSource(size, gradient);
             }
 
-            var nameFormat = "{0}/" + _effectCount + " - {1}";
+            var nameFormat = "{0}/" + EffectCount + " - {1}";
 
             switch (_effectIndex)
             {

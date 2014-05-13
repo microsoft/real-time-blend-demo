@@ -27,14 +27,18 @@ namespace RealtimeBlendDemo
 
             // Application version number
 
-            var version = XDocument.Load("WMAppManifest.xml").Root.Element("App").Attribute("Version").Value;
-
-            var versionRun = new Run()
+            var xElement = XDocument.Load("WMAppManifest.xml").Root;
+            if (xElement != null)
             {
-                Text = String.Format(AppResources.AboutPage_VersionRun, version) + "\n"
-            };
+                var version = xElement.Element("App").Attribute("Version").Value;
 
-            VersionParagraph.Inlines.Add(versionRun);
+                var versionRun = new Run()
+                {
+                    Text = String.Format(AppResources.AboutPage_VersionRun, version) + "\n"
+                };
+
+                VersionParagraph.Inlines.Add(versionRun);
+            }
 
             // Application about text
 

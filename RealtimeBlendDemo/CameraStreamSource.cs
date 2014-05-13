@@ -10,11 +10,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Windows.Foundation;
@@ -88,11 +86,11 @@ namespace RealtimeBlendDemo
             mediaSourceAttributes[MediaSourceAttributesKeys.Duration] = TimeSpan.FromSeconds(0).Ticks.ToString(CultureInfo.InvariantCulture);
             mediaSourceAttributes[MediaSourceAttributesKeys.CanSeek] = false.ToString();
 
-            _frameTime = (int)TimeSpan.FromSeconds((double)0).Ticks;
+            _frameTime = (int)TimeSpan.FromSeconds(0).Ticks;
 
             // Start frame rate timer
 
-            _frameRateTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
+            _frameRateTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             _frameRateTimer.Tick += FrameRateTimer_Tick;
             _frameRateTimer.Start();
 
@@ -135,7 +133,7 @@ namespace RealtimeBlendDemo
 
             // When asynchronous call completes, proceed by reporting about the sample completion
 
-            task.ContinueWith((action) =>
+            task.ContinueWith(action =>
             {
                 if (_frameStream != null)
                 {
