@@ -1,14 +1,14 @@
-﻿Real-time Blend Demo
-=====================
+Real-time Blend Demo
+====================
 
-Nokia example application demonstrating the real-time use of the blend effect
-provided by the Nokia Imaging SDK, the effect being applied to a stream of
+An example application demonstrating the real-time use of the blend effect
+provided by the Imaging SDK, the effect being applied to a stream of
 images received from the phone's camera.
 
 This example application is hosted in GitHub:
 https://github.com/Microsoft/real-time-blend-demo
 
-For more information on implementation visit Nokia Lumia Developer's Library:
+For more information on implementation visit Lumia Developer's Library:
 http://developer.nokia.com/Resources/Library/Lumia/nokia-imaging-sdk/sample-projects/real-time-blend-demo.html
 
 Developed with Microsoft Visual Studio Express for Windows Phone 2012.
