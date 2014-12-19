@@ -1,15 +1,15 @@
-Real-time Blend Demo
-====================
+﻿Real-time Blend Demo
+=====================
 
-An example application demonstrating the real-time use of the blend effect
-provided by the Imaging SDK, the effect being applied to a stream of
+Lumia example application demonstrating the real-time use of the blend effect
+provided by the Lumia Imaging SDK, the effect being applied to a stream of
 images received from the phone's camera.
 
 This example application is hosted in GitHub:
-https://github.com/Microsoft/real-time-blend-demo
+https://github.com/microsoft/real-time-blend-demo
 
 For more information on implementation visit Lumia Developer's Library:
-http://developer.nokia.com/Resources/Library/Lumia/nokia-imaging-sdk/sample-projects/real-time-blend-demo.html
+http://dev.windows.com/en-us/featured/lumia
 
 Developed with Microsoft Visual Studio Express for Windows Phone 2012.
 
@@ -95,11 +95,24 @@ None.
 
 License
 -------
-
-See the license file delivered with this project.
-The license is also available online at
-https://github.com/Microsoft/real-time-blend-demo/blob/master/Licence.txt
-
+   	Copyright (c) 2014 Microsoft Mobile
+ 
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+	
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
 
 Version history
 ---------------

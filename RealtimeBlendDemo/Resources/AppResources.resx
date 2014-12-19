@@ -141,10 +141,10 @@
     <value>previous effect</value>
   </data>
   <data name="AboutPage_AboutRun" xml:space="preserve">
-    <value>This is a example application demonstrating the real-time use of the blend effect provided by the Nokia Imaging SDK, the effect being applied to a stream of images received from the phone's camera.</value>
+    <value>This is a Nokia example application demonstrating the real-time use of the blend effect provided by the Nokia Imaging SDK, the effect being applied to a stream of images received from the phone's camera.</value>
   </data>
   <data name="AboutPage_Hyperlink_Project" xml:space="preserve">
-    <value>http://www.github.com/Microsoft/real-time-blend-demo/</value>
+    <value>http://www.github.com/nokia-developer/real-time-blend-demo/</value>
   </data>
   <data name="AboutPage_ProjectRun" xml:space="preserve">
     <value>For more information and application source code go to {0}.</value>

@@ -9,9 +9,9 @@ using System.Resources;
 [assembly: AssemblyTitle("RealtimeBlendDemo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Nokia")]
+[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("RealtimeBlendDemo")]
-[assembly: AssemblyCopyright("Copyright © 2013-2014 Microsoft Mobile")]
+[assembly: AssemblyCopyright("Copyright © 2014 Microsoft Mobile")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

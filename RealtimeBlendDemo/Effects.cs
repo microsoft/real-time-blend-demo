@@ -1,14 +1,26 @@
-﻿/**
- * Copyright (c) 2013-2014 Microsoft Mobile. All rights reserved.
- *
- * Nokia and Nokia Connecting People are registered trademarks of Nokia Corporation.
- * Other product and company names mentioned herein may be trademarks
- * or trade names of their respective owners.
- *
- * See the license text file for license information.
+﻿/*
+ * Copyright (c) 2014 Microsoft Mobile
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
-using Nokia.Graphics.Imaging;
+using Lumia.Imaging;
+using Lumia.Imaging.Compositing;
 using RealtimeBlendDemo.Resources;
 using System;
 using System.Collections.Generic;
@@ -25,8 +37,8 @@ namespace RealtimeBlendDemo
     {
         private PhotoCaptureDevice _photoCaptureDevice;
         private CameraPreviewImageSource _cameraPreviewImageSource;
-        private FilterEffect _filterEffect;
-        private BlendFilter _blendFilter;
+        private BlendEffect _blendEffect;
+        
         private Rect _targetArea;
         private double _targetAreaRotation;
         private Uri _blendImageUri;
@@ -37,7 +49,7 @@ namespace RealtimeBlendDemo
 
         public String EffectName { get; private set; }
 
-        public double EffectLevel { get; set; }
+        public double GlobalAlpha { get; set; }
 
         public PhotoCaptureDevice PhotoCaptureDevice
         {
@@ -58,7 +70,7 @@ namespace RealtimeBlendDemo
 
         public Effects()
         {
-            EffectLevel = 0.5;
+            GlobalAlpha = 0.5;
             _targetArea = new Rect(0, 0, 1, 1);
         }
 
@@ -80,11 +92,11 @@ namespace RealtimeBlendDemo
 
                 try
                 {
-                    if (_filterEffect != null)
+                    if (_blendEffect != null)
                     {
-                        _blendFilter.Level = EffectLevel;
+                        _blendEffect.GlobalAlpha = GlobalAlpha;
 
-                        var renderer = new BitmapRenderer(_filterEffect, bitmap);
+                        var renderer = new BitmapRenderer(_blendEffect, bitmap);
                         await renderer.RenderAsync();
                     }
                     else
@@ -124,9 +136,9 @@ namespace RealtimeBlendDemo
                 _targetArea = targetArea;
                 _targetAreaRotation = targetAreaRotation;
 
-                if (_blendFilter != null) {
-                    _blendFilter.TargetArea = targetArea;
-                    _blendFilter.TargetAreaRotation = targetAreaRotation;
+                if (_blendEffect != null) {
+                    _blendEffect.TargetArea = targetArea;
+                    _blendEffect.TargetAreaRotation = targetAreaRotation;
                 }
 
                 _semaphore.Release();
@@ -179,17 +191,11 @@ namespace RealtimeBlendDemo
                 _cameraPreviewImageSource = null;
             }
 
-            if (_filterEffect != null)
+            if (_blendEffect != null)
             {
-                _filterEffect.Dispose();
-                _filterEffect = null;
-            }
-
-            if (_blendFilter != null)
-            {
-                _blendFilter.Dispose();
-                _blendFilter = null;
-            }
+                _blendEffect.Dispose();
+                _blendEffect = null;
+            }           
 
             if (_blendImageProvider != null)
             {
@@ -234,120 +240,113 @@ namespace RealtimeBlendDemo
                 case 1:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Normal);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Normal, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Normal, GlobalAlpha);
                     }
                     break;
 
                 case 2:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Multiply);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Multiply, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource, _blendImageProvider, BlendFunction.Multiply, GlobalAlpha);
                     }
                     break;
 
                 case 3:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Add);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Add, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource, _blendImageProvider, BlendFunction.Add, GlobalAlpha);
                     }
                     break;
 
                 case 4:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Color);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Color, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Color, GlobalAlpha);
                     }
                     break;
 
                 case 5:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Colorburn);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Colorburn, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Colorburn, GlobalAlpha);
                     }
                     break;
 
                 case 6:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Colordodge);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Colordodge, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Colordodge, GlobalAlpha);
                     }
                     break;
 
                 case 7:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Overlay);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Overlay, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Overlay, GlobalAlpha);
                     }
                     break;
 
                 case 8:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Softlight);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Softlight, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Softlight, GlobalAlpha);
                     }
                     break;
 
                 case 9:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Screen);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Screen, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Screen, GlobalAlpha);
                     }
                     break;
 
                 case 10:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Hardlight);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Hardlight, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Hardlight, GlobalAlpha);
                     }
                     break;
 
                 case 11:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Darken);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Darken, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Darken, GlobalAlpha);
                     }
                     break;
 
                 case 12:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Lighten);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Lighten, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource, _blendImageProvider, BlendFunction.Lighten, GlobalAlpha);
                     }
                     break;
 
                 case 13:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Hue);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Hue, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource, _blendImageProvider, BlendFunction.Hue, GlobalAlpha);
                     }
                     break;
 
                 case 14:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Exclusion);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Exclusion, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource, _blendImageProvider, BlendFunction.Exclusion, GlobalAlpha);
                     }
                     break;
 
                 case 15:
                     {
                         EffectName = String.Format(nameFormat, _effectIndex + 1, AppResources.Filter_Blend_Difference);
-                        _blendFilter = new BlendFilter(_blendImageProvider, BlendFunction.Difference, EffectLevel);
+                        _blendEffect = new BlendEffect(_cameraPreviewImageSource,_blendImageProvider, BlendFunction.Difference, GlobalAlpha);
                     }
                     break;
             }
 
-            if (_blendFilter != null)
+            if (_blendEffect != null)
             {
-                _blendFilter.TargetArea = _targetArea;
-                _blendFilter.TargetAreaRotation = _targetAreaRotation;
-
-                var filters = new List<IFilter> {_blendFilter};
-
-                _filterEffect = new FilterEffect(_cameraPreviewImageSource)
-                {
-                    Filters = filters
-                };
+                _blendEffect.TargetArea = _targetArea;
+                _blendEffect.TargetAreaRotation = _targetAreaRotation;                
             }
         }
     }

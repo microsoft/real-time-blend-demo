@@ -61,7 +61,7 @@ namespace RealtimeBlendDemo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is a example application demonstrating the real-time use of the blend effect provided by the Nokia Imaging SDK, the effect being applied to a stream of images received from the phone&apos;s camera..
+        ///   Looks up a localized string similar to This is a Lumia example application demonstrating the real-time use of the blend effect provided by the Lumia Imaging SDK, the effect being applied to a stream of images received from the phone&apos;s camera..
         /// </summary>
         public static string AboutPage_AboutRun {
             get {
@@ -70,7 +70,7 @@ namespace RealtimeBlendDemo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://www.github.com/Microsoft/real-time-blend-demo/.
+        ///   Looks up a localized string similar to https://github.com/Microsoft/real-time-blend-demo.
         /// </summary>
         public static string AboutPage_Hyperlink_Project {
             get {

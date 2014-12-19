@@ -64,45 +64,40 @@ namespace RealtimeBlendDemo
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
-        private void Application_Launching(object sender, LaunchingEventArgs e)
+        private async void Application_Launching(object sender, LaunchingEventArgs e)
         {
             var captureResolution = PhotoCaptureDevice.GetAvailableCaptureResolutions(CameraSensorLocation.Back).Last();
-
-            var task = PhotoCaptureDevice.OpenAsync(CameraSensorLocation.Back, captureResolution).AsTask();
-
-            task.Wait();
-
-            Camera = task.Result;
-
-            var previewResolution = PhotoCaptureDevice.GetAvailablePreviewResolutions(CameraSensorLocation.Back).Last();
+            
+            Texture = new Texture(new Uri(@"Assets/Textures/texture1.png", UriKind.Relative), new Uri(@"Assets/Textures/texture1-thumb.jpg", UriKind.Relative));
+         
             try
             {
-                Camera.SetPreviewResolutionAsync(previewResolution).AsTask().Wait();
+                Camera = await PhotoCaptureDevice.OpenAsync(CameraSensorLocation.Back, captureResolution);
+
+
+                await Camera.SetPreviewResolutionAsync(captureResolution).AsTask();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error setting camera preview resolution: {0}", e);
             }
 
-            Texture = new Texture(new Uri(@"Assets/Textures/texture1.png", UriKind.Relative), new Uri(@"Assets/Textures/texture1-thumb.jpg", UriKind.Relative));
+            
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
-        private void Application_Activated(object sender, ActivatedEventArgs e)
+        private async void Application_Activated(object sender, ActivatedEventArgs e)
         {
             var captureResolution = PhotoCaptureDevice.GetAvailableCaptureResolutions(CameraSensorLocation.Back).Last();
 
-            var task = PhotoCaptureDevice.OpenAsync(CameraSensorLocation.Back, captureResolution).AsTask();
+            Camera = await PhotoCaptureDevice.OpenAsync(CameraSensorLocation.Back, captureResolution);
 
-            task.Wait();
-
-            Camera = task.Result;
 
             var previewResolution = PhotoCaptureDevice.GetAvailablePreviewResolutions(CameraSensorLocation.Back).Last();
             try
             {
-                Camera.SetPreviewResolutionAsync(previewResolution).AsTask().Wait();
+                await Camera.SetPreviewResolutionAsync(previewResolution);
             }
             catch (Exception ex)
             {
