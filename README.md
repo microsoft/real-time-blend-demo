@@ -9,7 +9,7 @@ This example application is hosted in GitHub:
 https://github.com/microsoft/real-time-blend-demo
 
 For more information on implementation visit Lumia Developer's Library:
-http://dev.windows.com/en-us/featured/lumia
+http://go.microsoft.com/fwlink/?LinkId=528376
 
 Developed with Microsoft Visual Studio Express for Windows Phone 2012.
 
